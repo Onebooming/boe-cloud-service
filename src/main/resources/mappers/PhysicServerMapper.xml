@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onebooming.boecloudservice.dao.PhysicServerMapper">
+    <insert id="addServers" parameterType="com.onebooming.boecloudservice.bean.PhysicServer" useGeneratedKeys="true" keyProperty="id">
+        insert into t_physicservers(name,area,datacenter,position,height,brand,type,serialnumber,
+        bIp,mgmtIp,cpuname,cpunum,memorysum,storage,manufactor,department,user,maintainor)
+         values
+        (#{name},#{area},#{datacenter},#{position},#{height},#{brand},#{type},#{serialNumber},
+        #{bIp},#{mgmtIp},#{cpuName},#{cpuNum},#{memorySum},#{storage},#{manufactor},#{department},#{user},#{maintainor})
+    </insert>
+    <update id="updateServers" parameterType="com.onebooming.boecloudservice.bean.PhysicServer">
+        update t_physicservers set
+        name=#{name},
+        area=#{area},
+        datacenter=#{datacenter},
+        position=#{position},
+        height=#{height},
+        brand=#{brand},
+        type=#{type},
+        serialnumber=#{serialNumber},
+        bIp=#{bIp},
+        mgmtIp=#{mgmtIp},
+        cpuname=#{cpuName},
+        cpunum=#{cpuNum},
+        memorysum=#{memorySum},
+        storage=#{storage},
+        manufactor=#{manufactor},
+        department=#{department},
+        user=#{user},
+        maintainor=#{maintainor}
+        where id=#{id}
+    </update>
+    <delete id="deleteServersById" parameterType="java.lang.Long">
+        delete from t_physicservers where id=#{id}
+    </delete>
+    <select id="getAllServers" resultType="com.onebooming.boecloudservice.bean.PhysicServer">
+        select * from t_physicservers
+    </select>
+    <select id="getServerByName" parameterType="String" resultType="com.onebooming.boecloudservice.bean.PhysicServer">
+        select * from t_physicservers where name=#{name}
+    </select>
+</mapper>
