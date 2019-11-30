@@ -9,13 +9,16 @@ public class RespBean {
     private String status;//状态
     private String msg;//MSG命令是向用户发送消息
 
+
     public RespBean() {
     }
 
-    public RespBean(String status, String msg) {
 
+
+    public RespBean(String status, String msg) {
         this.status = status;
         this.msg = msg;
+
     }
 
     public String getStatus() {

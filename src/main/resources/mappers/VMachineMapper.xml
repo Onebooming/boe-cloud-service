@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onebooming.boecloudservice.dao.VMachineMapper">
+
+    <select id="getAllVMIP" resultType="com.onebooming.boecloudservice.bean.VMIP">
+        select * from t_vmip;
+    </select>
+    <insert id="addVMchine" parameterType="com.onebooming.boecloudservice.bean.VMachine">
+            insert into t_vm (name, ip,
+      createDate,uuid,cpu,memory,storage,networkAdapter,ownner,
+      email,phoneNum,department,job,duty,fee,useForm,cpuDosage,memoryDosage,
+      storageDosage,beginWorkDate,workState,supervisor,osVersion,beFormDate,
+      notWorkDate,serverHostIp,notice,runDuration
+      )
+    values (#{name},#{ip},#{createDate},#{uuid},#{cpu},#{memory},#{storage},#{networkAdapter},
+    #{ownner},#{email},#{phoneNum},#{department},#{job},#{duty},#{fee},#{useForm},#{cpuDosage},
+    #{memoryDosage},#{storageDosage},#{beginWorkDate},#{workState},#{supervisor},#{osVersion},
+    #{beFormDate},#{notWorkDate},#{serverHostIp},#{notice},#{runDuration}
+      )
+    </insert>
+
+    <resultMap id="BaseResultMap" type="com.onebooming.boecloudservice.bean.VMachine">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="ip" property="ip"/>
+        <result column="createDate" property="createDate"/>
+        <result column="uuid" property="uuid"/>
+        <result column="cpu" property="cpu"/>
+        <result column="memory" property="memory"/>
+        <result column="storage" property="storage"/>
+        <result column="networkAdapter" property="networkAdapter"/>
+        <result column="ownner" property="ownner"/>
+        <result column="email" property="email"/>
+        <result column="phoneNum" property="phoneNum"/>
+        <result column="department" property="department"/>
+        <result column="job" property="job"/>
+        <result column="duty" property="duty"/>
+        <result column="fee" property="fee"/>
+        <result column="useForm" property="useForm"/>
+        <result column="cpuDosage" property="cpuDosage"/>
+        <result column="memoryDosage" property="memoryDosage"/>
+        <result column="storageDosage" property="storageDosage"/>
+        <result column="beginWorkDate" property="beginWorkDate"/>
+        <result column="workState" property="workState"/>
+        <result column="supervisor" property="supervisor"/>
+        <result column="osVersion" property="osVersion"/>
+        <result column="beFormDate" property="beFormDate"/>
+        <result column="notWorkDate" property="notWorkDate"/>
+        <result column="serverHostIp" property="serverHostIp"/>
+        <result column="notice" property="notice"/>
+        <result column="runDuration" property="runDuration"/>
+    </resultMap>
+
+    <select id="getCountByKeywords" resultType="Long">
+        SELECT count(*) FROM t_vm v WHERE v.name LIKE concat('%',#{keywords},'%')
+    </select>
+    <update id="updateVMachine" parameterType="com.onebooming.boecloudservice.bean.VMachine">
+        update t_vm set
+        name = #{name},
+        ip = #{ip},
+        createDate = #{createDate},
+        uuid= #{uuid},
+        cpu = #{cpu},
+        memory = #{memory},
+        storage = #{storage},
+        networkAdapter = #{networkAdapter},
+        ownner = #{ownner},
+        email = #{email},
+        phoneNum = #{phoneNum},
+        department = #{department},
+        job = #{job},
+        duty = #{duty},
+        fee = #{fee},
+        useForm = #{useForm},
+        cpuDosage = #{cpuDosage},
+        memoryDosage = #{memoryDosage},
+        storageDosage = #{storageDosage},
+        beginWorkDate = #{beginWorkDate},
+        workState = #{workState},
+        supervisor= #{supervisor},
+        osVersion = #{osVersion},
+        beFormDate = #{beFormDate},
+        notWorkDate = #{notWorkDate},
+        serverHostIp = #{serverHostIp},
+        notice = #{notice},
+        runDuration = #{runDuration} where id = #{id}
+    </update>
+
+    <delete id="deleteVMachineByIds">
+        DELETE FROM t_vm WHERE id IN
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteVMachineById">
+        DELETE FROM t_vm WHERE id = #{id}
+    </delete>
+
+    <insert id="addVMachines">
+        insert into t_vm
+        (name,
+        ip,
+        createDate,
+        uuid,
+        cpu,
+        memory,
+        storage,
+        networkAdapter,
+        ownner,
+        email,
+        phoneNum,
+        department,
+        job,
+        duty,
+        fee,
+        useForm,
+        cpuDosage,
+        memoryDosage,
+        storageDosage,
+        beginWorkDate,
+        workState,
+        supervisor,
+        osVersion,
+        beFormDate,
+        notWorkDate,
+        serverHostIp,
+        notice,
+        runDuration
+        )
+        values
+        <foreach collection="vMachines" item="vMachine" separator=",">
+            (#{vMachine.name},
+            #{vMachine.ip},
+            #{vMachine.createDate},
+            #{vMachine.uuid},
+            #{vMachine.cpu},
+            #{vMachine.memory},
+            #{vMachine.storage},
+            #{vMachine.networkAdapter},
+            #{vMachine.ownner},
+            #{vMachine.email},
+            #{vMachine.phoneNum},
+            #{vMachine.department},
+            #{vMachine.job},
+            #{vMachine.duty},
+            #{vMachine.fee},
+            #{vMachine.useForm},
+            #{vMachine.cpuDosage},
+            #{vMachine.memoryDosage},
+            #{vMachine.storageDosage},
+            #{vMachine.beginWorkDate},
+            #{vMachine.workState},
+            #{vMachine.supervisor},
+            #{vMachine.osVersion},
+            #{vMachine.beFormDate},
+            #{vMachine.notWorkDate},
+            #{vMachine.serverHostIp},
+            #{vMachine.notice},
+            #{vMachine.runDuration}
+            )
+        </foreach>
+    </insert>
+    <select id="getVMachineByPageShort" resultMap="BaseResultMap">
+        select v.* from t_vm v ORDER BY v.id limit #{start},#{size}
+    </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select * from t_vm
+    </select>
+</mapper>

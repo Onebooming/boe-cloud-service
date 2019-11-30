@@ -22,6 +22,7 @@ public class VirtualMachine {
     public Date bootTime;//boot时间
     public String exsiIp;//exsiIP
 
+
     public Long getId() {
         return id;
     }
